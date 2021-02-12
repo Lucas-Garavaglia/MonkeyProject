@@ -1,0 +1,28 @@
+{
+    "helpDescription": "Mostra todos os comandos disponíveis.", 
+    "getQueueDescription": "Obtém as playlists salvas por membros do servidor",
+    "lyricsDescription": "Obtém a letra da música atual",
+    "nextDescription": "Pula para a próxima música da lista de reprodução",
+    "nowPlaying": "Mostra a música que está sendo reproduzida atualmente",
+    "pauseDescription": "Para a reprodução atual e a deixa em estado de espera",
+    "playDescription": "Reproduz uma música do youtube",
+    "playlistDescription": "Reproduz uma playlist do youtube",
+    "pruningDescription": "Alterna o modo de auto exclusão das mensagens enviadas pelo bot",
+    "queueDescription": "Mostra a lista de reprodução atual",
+    "removeDescription": "Remove a música da queue",
+    "repeatDescription": "Alterna o estado de repetição da fila",
+    "resumeDescription": "Continua a reprodução atual que estava em espera",
+    "saveQueueDescription": "Salva a lista de reprodução atual",
+    "searchDescription": "Busca e retorna uma lista de músicas do youtube",
+    "suffleDescription": "Embaralha a lista de reprodução atual",
+    "skipToDescription": "Pula para música selecionada",
+    "stopDescription": "Para a reprodução atual e limpa a fila",
+    "volumeDescription": "Modifica o volume base de reprodução",
+
+
+    "noPlayListFound": "Não existem músicas na lista de reprodução!",
+    "noChannel": "Você precisa se conectar a um canal de voz primeiro",
+    "argsError": "Você não inseriu argumentos suficientes para usar esse comando! Digite .help para obter ajuda",
+    "noPermissionsConnect": "Não tenho permissão para conectar ao canal de voz!",
+    "noPermissionsVoice": "Não tenho permissão para falar nesse canal de voz!"
+}
