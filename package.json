@@ -17,14 +17,14 @@
     "discord.js": "^12.5.1",
     "ffmpeg": "0.0.4",
     "fluent-ffmpeg": "^2.1.2",
-    "knex": "^0.21.17",
+    "knex": "^0.21.18",
     "lyrics-finder": "^21.7.0",
     "simple-youtube-api": "^5.2.1",
     "sqlite": "^4.0.19",
-    "sqlite3": "^5.0.1",
+    "sqlite3": "^5.0.2",
     "string-progressbar": "^1.0.3",
-    "ytdl-core": "^4.4.5",
+    "ytdl-core": "^4.5.0",
     "ytdl-core-discord": "^1.2.5",
-    "ytsr": "^3.2.4"
+    "ytsr": "^3.3.1"
   }
 }
