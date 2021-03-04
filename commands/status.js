@@ -10,7 +10,12 @@ module.exports = {
 			if (err) {
 				console.error(err);
 			}
-			experience = Math.pow(row.level * 4, 2) + row.xp;
+			for (var i = 0; i < row.level; i++) {
+				experience = experience + Math.pow((i + 1) * 4, 2);
+			}
+			console.log(experience)
+			experience = experience + row.xp;
+			console.log(experience)
 			let Embed = new MessageEmbed()
 				.setColor("#00F111")
 				.setTitle(`Status do ${message.author.tag}.`)
