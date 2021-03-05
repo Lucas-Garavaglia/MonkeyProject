@@ -11,13 +11,12 @@ module.exports = {
 		db.all(`SELECT * FROM Users ORDER BY level DESC`, (err, rows) => {
 			for (var i = 0; i < rows.length; i++) {
 				Embed.addField(
-					`${i + 1}   ${rows[i].name} está no level `,
-					rows[i].level,
-					true
+					`(${i + 1}) `,
+					`${rows[i].name} está no level ${rows[i].level}`
 				);
 			}
-			console.log(Embed);
+			message.channel.send(Embed).catch(console.error);
 		});
-		message.channel.send(Embed).catch(console.error);
 	},
 };
+
