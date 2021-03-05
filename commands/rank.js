@@ -16,8 +16,8 @@ module.exports = {
 				}
 				Embed.addField(
 					`(${i + 1}) ${rows[i].name}`,
-					`Level ${rows[i].level}\n
-					 Xp ${rows[i].xp}\n
+					`Level ${rows[i].level}
+					 Xp ${rows[i].xp}
 					 Total Xp ${experience}`
 				);
 			}
