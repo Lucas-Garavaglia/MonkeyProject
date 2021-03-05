@@ -3,9 +3,11 @@ module.exports = {
 	Description: "Cuida dos níveis dos usuários do discord.",
 	execute(message, db, isCommand) {
 		let user = message.author;
-		let addXp = 10;
+		let addXp;
 		if (isCommand) {
-			addXp = 25;
+			addXp = Math.floor(Math.random() * (40 - 20)) + 20;
+		} else {
+			addXp = Math.floor(Math.random() * (15 - 5)) + 5;
 		}
 		db.get(`SELECT * FROM Users Where id=${user.id}`, (err, row) => {
 			if (err) {
