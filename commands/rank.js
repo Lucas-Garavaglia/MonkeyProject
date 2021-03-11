@@ -14,11 +14,10 @@ module.exports = {
 				for (var j = 0, experience = 0; j < rows[i].level; j++) {
 					experience = experience + Math.pow((j + 1) * 4, 2);
 				}
+				experience = experience + rows[i].xp;
 				Embed.addField(
 					`(${i + 1}) ${rows[i].name}`,
-					`Level ${rows[i].level}
-					 Xp ${rows[i].xp}
-					 Total Xp ${experience}`
+					`Level ${rows[i].level}\nXp ${rows[i].xp}\nTotal Xp ${experience}`
 				);
 			}
 			message.channel.send(Embed).catch(console.error);
