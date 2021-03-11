@@ -24,14 +24,22 @@ client.once("ready", () => {
 	console.log("Ready!");
 	client.user.setActivity(`${prefix}help | Monkey Project!`);
 });
+
+client.on("guildCreate", (guild) => {
+	db.run(`INSERT INTO Servers (id,name) VALUES (${guild.id},"${guild.name}")`);
+});
+
+client.on("guildDelete", (guild) => {
+	db.run(`DELETE FROM Servers WHERE id=${guild.id}`);
+});
+
 client.on("message", async (message) => {
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
-	const command =
-		client.commands.get(commandName) ||
-		client.commands.find(
-			(cmd) => cmd.aliases && cmd.aliases.includes(commandName)
-		);
+	const command = client.commands.get(commandName);
+	client.commands.find(
+		(cmd) => cmd.aliases && cmd.aliases.includes(commandName)
+	);
 	if (message.author.bot) return;
 	if (message.channel.type === "dm") return;
 	if (!command) {

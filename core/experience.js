@@ -9,36 +9,41 @@ module.exports = {
 		} else {
 			addXp = Math.floor(Math.random() * (15 - 5)) + 5;
 		}
-		db.get(`SELECT * FROM Users Where id=${user.id}`, (err, row) => {
-			if (err) {
-				console.error(err);
-			}
-			if (!row) {
-				db.run(
-					`INSERT INTO Users (id,xp,level,name) VALUES (${user.id},1,1,"${user.tag}")`
-				);
-			} else {
-				let selXP = row.xp;
-				let selLevel = row.level;
-				let experienceToNextLevel = Math.pow((selLevel + 1) * 4, 2);
-				let finalExperience = selXP + addXp;
-				if (finalExperience >= experienceToNextLevel) {
-					finalExperience = finalExperience - experienceToNextLevel;
+		db.get(
+			`SELECT * FROM Users Where idUser=${user.id} AND idServer=${message.guild.id}`,
+			(err, row) => {
+				if (err) {
+					console.error(err);
+				}
+				if (!row) {
 					db.run(
-						`UPDATE Users 
-             SET level=${selLevel + 1},xp=${finalExperience} 
-             WHERE id=${user.id}`,
-						(err) => {
-							if (err) {
-								console.error(err);
-							}
-							message.reply(`Você agora é level **${selLevel + 1}**`);
-						}
+						`INSERT INTO Users (idUser,xp,level,name,idServer) VALUES (${user.id},1,1,"${user.tag}",${message.guild.id})`
 					);
 				} else {
-					db.run(`UPDATE Users SET xp=${finalExperience} WHERE id=${user.id}`);
+					let selXP = row.xp;
+					let selLevel = row.level;
+					let experienceToNextLevel = Math.pow((selLevel + 1) * 4, 2);
+					let finalExperience = selXP + addXp;
+					if (finalExperience >= experienceToNextLevel) {
+						finalExperience = finalExperience - experienceToNextLevel;
+						db.run(
+							`UPDATE Users 
+             SET level=${selLevel + 1},xp=${finalExperience} 
+             WHERE idUser=${user.id} AND idServer=${message.guild.id}`,
+							(err) => {
+								if (err) {
+									console.error(err);
+								}
+								message.reply(`Você agora é level **${selLevel + 1}**`);
+							}
+						);
+					} else {
+						db.run(
+							`UPDATE Users SET xp=${finalExperience} WHERE idUser=${user.id} AND idServer=${message.guild.id}`
+						);
+					}
 				}
 			}
-		});
+		);
 	},
 };
