@@ -4,6 +4,7 @@ module.exports = {
 	execute(message, db, isCommand) {
 		let user = message.author;
 		let addXp;
+		var dataAtual = new Date();
 		if (isCommand) {
 			addXp = Math.floor(Math.random() * (40 - 20)) + 20;
 		} else {
@@ -20,27 +21,37 @@ module.exports = {
 						`INSERT INTO Users (idUser,xp,level,name,idServer) VALUES (${user.id},1,1,"${user.tag}",${message.guild.id})`
 					);
 				} else {
-					let selXP = row.xp;
-					let selLevel = row.level;
-					let experienceToNextLevel = Math.pow((selLevel + 1) * 4, 2);
-					let finalExperience = selXP + addXp;
-					if (finalExperience >= experienceToNextLevel) {
-						finalExperience = finalExperience - experienceToNextLevel;
-						db.run(
-							`UPDATE Users 
-             SET level=${selLevel + 1},xp=${finalExperience} 
-             WHERE idUser=${user.id} AND idServer=${message.guild.id}`,
-							(err) => {
-								if (err) {
-									console.error(err);
+					if (dataAtual.getTime() - row.lastMessage > 5000) {
+						let selXP = row.xp;
+						let selLevel = row.level;
+						let experienceToNextLevel = Math.pow((selLevel + 1) * 4, 2);
+						let finalExperience = selXP + addXp;
+						if (finalExperience >= experienceToNextLevel) {
+							finalExperience = finalExperience - experienceToNextLevel;
+							db.run(
+								`UPDATE Users 
+             SET level=${selLevel + 1},xp=${finalExperience},
+							lastMessage=${dataAtual.getTime()} 
+							WHERE idUser=${user.id} AND idServer=${message.guild.id}`,
+								(err) => {
+									if (err) {
+										console.error(err);
+									}
+									message.reply(`Você agora é level **${selLevel + 1}**`);
 								}
-								message.reply(`Você agora é level **${selLevel + 1}**`);
-							}
-						);
+							);
+						} else {
+							db.run(
+								`UPDATE Users SET xp=${finalExperience},
+							lastMessage=${dataAtual.getTime()}  
+							WHERE idUser=${user.id} AND idServer=${message.guild.id}`
+							);
+						}
 					} else {
-						db.run(
-							`UPDATE Users SET xp=${finalExperience} WHERE idUser=${user.id} AND idServer=${message.guild.id}`
-						);
+						// db.run(
+						// 	`UPDATE Users SET	lastMessage=${dataAtual.getTime()}
+						// 	WHERE idUser=${user.id} AND idServer=${message.guild.id}`
+						// );
 					}
 				}
 			}
