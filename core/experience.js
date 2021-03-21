@@ -48,10 +48,10 @@ module.exports = {
 							);
 						}
 					} else {
-						// db.run(
-						// 	`UPDATE Users SET	lastMessage=${dataAtual.getTime()}
-						// 	WHERE idUser=${user.id} AND idServer=${message.guild.id}`
-						// );
+						 db.run(
+						 	`UPDATE Users SET	lastMessage=${dataAtual.getTime()}
+						 	WHERE idUser=${user.id} AND idServer=${message.guild.id}`
+						 );
 					}
 				}
 			}
