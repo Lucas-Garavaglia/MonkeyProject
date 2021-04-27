@@ -21,7 +21,7 @@ module.exports = {
 						`INSERT INTO Users (idUser,xp,level,name,idServer) VALUES (${user.id},1,1,"${user.tag}",${message.guild.id})`
 					);
 				} else {
-					if (dataAtual.getTime() - row.lastMessage > 5000) {
+					if (dataAtual.getTime() - row.lastMessage > 15000) {
 						let selXP = row.xp;
 						let selLevel = row.level;
 						let experienceToNextLevel = Math.pow((selLevel + 1) * 4, 2);

@@ -44,6 +44,7 @@ client.on("message", async (message) => {
 	if (message.channel.type === "dm") return;
 	if (!command) {
 		core.execute(message, db, false);
+		return;
 	} else {
 		core.execute(message, db, true);
 	}
