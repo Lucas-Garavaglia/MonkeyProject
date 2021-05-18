@@ -57,44 +57,44 @@ module.exports = {
 						try {
 							const results = await youtube.searchVideos(data.name, 1);
 							songInfo = await ytdl.getInfo(results[0].url);
+							song = {
+								title: songInfo.videoDetails.title,
+								url: songInfo.videoDetails.video_url,
+								duration: songInfo.videoDetails.lengthSeconds,
+							};
+							if (!Queue) {
+								const queueConstruct = {
+									textChannel: message.channel,
+									channel,
+									connection: null,
+									songs: [],
+									loop: false,
+									volume: 100,
+									playing: true,
+								};
+								queueConstruct.songs.push(song);
+								message.client.queue.set(message.guild.id, queueConstruct);
+								try {
+									queueConstruct.connection = await channel.join();
+									await queueConstruct.connection.voice.setSelfDeaf(true);
+									player(song, message);
+								} catch (error) {
+									console.error(error);
+									message.client.queue.delete(message.guild.id);
+									await channel.leave();
+									return message.channel
+										.send(`Não consegui conectar ao canal: ${error}`)
+										.catch(console.error);
+								}
+								Queue = message.client.queue.get(message.guild.id);
+							}
+							Queue.songs.push(song);
 						} catch (error) {
 							console.log(error);
 							message.channel
 								.send(`Não consegui encontrar: ${data.name}`)
 								.catch(console.error);
 						}
-						song = {
-							title: songInfo.videoDetails.title,
-							url: songInfo.videoDetails.video_url,
-							duration: songInfo.videoDetails.lengthSeconds,
-						};
-						if (!Queue) {
-							const queueConstruct = {
-								textChannel: message.channel,
-								channel,
-								connection: null,
-								songs: [],
-								loop: false,
-								volume: 100,
-								playing: true,
-							};
-							queueConstruct.songs.push(song);
-							message.client.queue.set(message.guild.id, queueConstruct);
-							try {
-								queueConstruct.connection = await channel.join();
-								await queueConstruct.connection.voice.setSelfDeaf(true);
-								player(song, message);
-							} catch (error) {
-								console.error(error);
-								message.client.queue.delete(message.guild.id);
-								await channel.leave();
-								return message.channel
-									.send(`Não consegui conectar ao canal: ${error}`)
-									.catch(console.error);
-							}
-							Queue = message.client.queue.get(message.guild.id);
-						}
-						Queue.songs.push(song);
 					}
 				} catch (err) {
 					console.error(err);
