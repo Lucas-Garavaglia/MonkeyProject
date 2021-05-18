@@ -57,8 +57,11 @@ module.exports = {
 						try {
 							const results = await youtube.searchVideos(data.name, 1);
 							songInfo = await ytdl.getInfo(results[0].url);
-						} catch (hmm) {
-							console.log(hmm);
+						} catch (error) {
+							console.log(error);
+							message.channel
+								.send(`Não consegui encontrar: ${data.name}`)
+								.catch(console.error);
 						}
 						song = {
 							title: songInfo.videoDetails.title,
