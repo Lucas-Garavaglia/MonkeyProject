@@ -54,8 +54,12 @@ module.exports = {
 					dataSpotify = await spotify.getTracks(search);
 					for (let i = 0; i < dataSpotify.length; i++) {
 						data = dataSpotify[i];
-						const results = await youtube.searchVideos(data.name, 1);
-						songInfo = await ytdl.getInfo(results[0].url);
+						try {
+							const results = await youtube.searchVideos(data.name, 1);
+							songInfo = await ytdl.getInfo(results[0].url);
+						} catch (hmm) {
+							console.log(hmm);
+						}
 						song = {
 							title: songInfo.videoDetails.title,
 							url: songInfo.videoDetails.video_url,
@@ -88,11 +92,6 @@ module.exports = {
 							Queue = message.client.queue.get(message.guild.id);
 						}
 						Queue.songs.push(song);
-						message.channel
-							.send(
-								`✅ **${song.title}** Foi adicionado a playlist pelo ${message.author}`
-							)
-							.catch(console.error);
 					}
 				} catch (err) {
 					console.error(err);
